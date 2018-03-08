@@ -1,4 +1,4 @@
-FROM joyesong/ubuntu-flask:1.0
+FROM joyesong/ubuntu-flask:1.1
 MAINTAINER Rajdeep Dua "joyesong@qq.com"
 COPY . /app
 WORKDIR /app
