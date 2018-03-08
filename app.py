@@ -3,10 +3,29 @@ from random import randint
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = '123456'
 
 @app.route("/")
-def index():
-    return "Flask App!"
+def home():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return "Hello Boss!  <a href='/logout'>Logout</a>"
+
+
+@app.route('/login', methods=['POST'])
+def do_admin_login():
+    if request.form['password'] == 'admin' and request.form['username'] == 'admin':
+        session['logged_in'] = True
+    else:
+        flash('wrong password!')
+    return home()
+
+
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    return home()
 
 
 @app.route("/hello/<string:name>/")
